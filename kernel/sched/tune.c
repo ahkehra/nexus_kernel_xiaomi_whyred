@@ -691,63 +691,6 @@ boost_write(struct cgroup_subsys_state *css, struct cftype *cft,
 	return 0;
 }
 
-#ifdef CONFIG_DYNAMIC_STUNE_BOOST
-static s64
-sched_boost_read(struct cgroup_subsys_state *css, struct cftype *cft)
-{
-	struct schedtune *st = css_st(css);
-
-	return st->sched_boost;
-}
-
-static int
-sched_boost_write(struct cgroup_subsys_state *css, struct cftype *cft,
-	    s64 sched_boost)
-{
-	struct schedtune *st = css_st(css);
-	st->sched_boost = sched_boost;
-
-	return 0;
-}
-
-static void
-boost_slots_init(struct schedtune *st)
-{
-	int i;
-	struct boost_slot *slot;
-
-	/* Initialize boost slots */
-	INIT_LIST_HEAD(&(st->active_boost_slots.list));
-	INIT_LIST_HEAD(&(st->available_boost_slots.list));
-
-	/* Populate available_boost_slots */
-	for (i = 0; i < DYNAMIC_BOOST_SLOTS_COUNT; ++i) {
-		slot = kmalloc(sizeof(*slot), GFP_KERNEL);
-		slot->idx = i;
-		list_add_tail(&(slot->list), &(st->available_boost_slots.list));
-	}
-}
-
-static void
-boost_slots_release(struct schedtune *st)
-{
-	struct boost_slot *slot, *next_slot;
-
-	list_for_each_entry_safe(slot, next_slot,
-				 &(st->available_boost_slots.list), list) {
-		list_del(&slot->list);
-		pr_info("STUNE: freed!\n");
-		kfree(slot);
-	}
-	list_for_each_entry_safe(slot, next_slot,
-				 &(st->active_boost_slots.list), list) {
-		list_del(&slot->list);
-		pr_info("STUNE: freed!\n");
-		kfree(slot);
-	}
-}
-#endif // CONFIG_DYNAMIC_STUNE_BOOST
-
 static struct cftype files[] = {
 	{
 		.name = "boost",
@@ -759,13 +702,6 @@ static struct cftype files[] = {
 		.read_u64 = prefer_idle_read,
 		.write_u64 = prefer_idle_write,
 	},
-#ifdef CONFIG_DYNAMIC_STUNE_BOOST
-	{
-		.name = "sched_boost",
-		.read_s64 = sched_boost_read,
-		.write_s64 = sched_boost_write,
-	},
-#endif // CONFIG_DYNAMIC_STUNE_BOOST
 	{ }	/* terminate */
 };
 
