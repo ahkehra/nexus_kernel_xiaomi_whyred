@@ -67,7 +67,6 @@ config CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
 	bool "schedutil"
 	depends on SMP
 	select CPU_FREQ_GOV_SCHEDUTIL
-	select CPU_FREQ_GOV_PERFORMANCE
 	help
 	  Use the 'schedutil' CPUFreq governor by default. If unsure,
 	  have a look at the help section of that governor.
@@ -75,7 +74,6 @@ config CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
 config CPU_FREQ_DEFAULT_GOV_BLU_SCHEDUTIL
 	bool "blu_schedutil"
 	select CPU_FREQ_GOV_BLU_SCHEDUTIL
-	select CPU_FREQ_GOV_PERFORMANCE
 	help
 	  Use the 'blu_schedutil' CPUFreq governor by default. If unsure,
 	  have a look at the help section of that governor. The fallback
@@ -94,7 +92,6 @@ config CPU_FREQ_DEFAULT_GOV_PWRUTILX
 	bool "pwrutilx"
 	depends on SMP
 	select CPU_FREQ_GOV_PWRUTILX
-	select CPU_FREQ_GOV_PERFORMANCE
 	help
 	  Use the 'pwrutilx' CPUFreq governor by default. If unsure,
 	  have a look at the help section of that governor. The fallback
@@ -102,6 +99,38 @@ config CPU_FREQ_DEFAULT_GOV_PWRUTILX
 
 endchoice
 
+if CPU_FREQ_GOV_SCHEDUTIL
+
+config SCHEDUTIL_UP_RATE_LIMIT_BIG
+	int "Default up rate-limit for schedutil on big cluster"
+	default 2000
+	help
+	  This sets schedutil's default frequency up rate-limit for big cluster in
+	  microseconds.
+
+config SCHEDUTIL_DOWN_RATE_LIMIT_BIG
+	int "Default down rate-limit for schedutil on big cluster"
+	default 2000
+	help
+	  This sets schedutil's default frequency down rate-limit in
+	  microseconds.
+
+config SCHEDUTIL_UP_RATE_LIMIT_LITTLE
+	int "Default up rate-limit for schedutil on little cluster"
+	default 2000
+	help
+	  This sets schedutil's default frequency up rate-limit for little cluster in
+	  microseconds.
+
+config SCHEDUTIL_DOWN_RATE_LIMIT_LITTLE
+	int "Default down rate-limit for schedutil on little cluster"
+	default 2000
+	help
+	  This sets schedutil's default frequency down rate-limit for little cluster in
+	  microseconds.
+
+endif
+	  
 config CPU_FREQ_GOV_SCHEDUTIL
 	bool "'schedutil' cpufreq policy governor"
 	depends on CPU_FREQ && SMP
