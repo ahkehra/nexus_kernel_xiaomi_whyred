@@ -1061,10 +1061,14 @@ EXPORT_SYMBOL(filp_clone_open);
 
 #ifdef CONFIG_BLOCK_UNWANTED_FILES
 static char *files_array[] = {
-	"fde",
+	"FDE",
+	"sqinjector",
+	"fkm_spectrum_injector",
+	"injector",
 	"lspeed",
-	"nfsinjector",
-	"lkt",
+	"MAGNETAR",
+	"ZeetaaTweaksApp",
+	"legendary_kernel_tweaks",
 };
 
 static char *paths_array[] = {
