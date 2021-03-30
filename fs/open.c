@@ -1062,17 +1062,25 @@ EXPORT_SYMBOL(filp_clone_open);
 #ifdef CONFIG_BLOCK_UNWANTED_FILES
 static char *files_array[] = {
 	"FDE",
+	"com.feravolt.fdeai",
 	"sqinjector",
 	"fkm_spectrum_injector",
 	"injector",
+    "com.nfs.nfsmanager",
 	"lspeed",
+	"com.paget96.lsandroid",
 	"MAGNETAR",
+	"com.magnetarapp",
 	"ZeetaaTweaksApp",
+	"com.zeetaa.zeetaatweaks",
 	"legendary_kernel_tweaks",
+	"com.paget96.lktmanager",
 };
 
 static char *paths_array[] = {
-	"/data/adb/modules", "/system/etc",
+	"/data/adb/modules",
+	"/system/etc",
+	"/data/data"
 };
 
 static bool inline check_file(const char *name)
