@@ -12,6 +12,7 @@ IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 TANGGAL=$(date +"%F-%S")
 START=$(date +"%s")
 PATH="$(PWD)/clang/bin:${PATH}"
+export KERNEL_USE_CCACHE=1
 export KBUILD_COMPILER_STRING=$(${pwd}/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 export ARCH=arm64
 export SUBARCH=arm64
