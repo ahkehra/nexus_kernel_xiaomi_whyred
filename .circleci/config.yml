@@ -10,7 +10,7 @@ jobs:
            git config --global user.email "vishal.rockstar7011@gmail.com"
            git config --global color.ui false
            git clone --depth=1 https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME} -b ${CIRCLE_BRANCH} .
-           bash .circleci/build.sh
+           bash .circleci/build
 workflows:
   version: 2.1
   cooking:
