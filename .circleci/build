@@ -4,8 +4,8 @@ git clone --depth=1 https://github.com/kdrag0n/proton-clang clang
 git clone --depth=1 https://github.com/akira-vishal/AnyKernel3.git AnyKernel
 echo "Done"
 DEVICE=WhyRed
-DEFCONFIG=whyred-newcam_defconfig
-CAMERA=NewCam
+DEFCONFIG=whyred_defconfig
+CAMERA=OldCam
 OVERCLOCK=NonOC
 VERSION=X5
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
