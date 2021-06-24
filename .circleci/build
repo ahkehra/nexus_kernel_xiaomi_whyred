@@ -6,7 +6,6 @@ echo "Done"
 DEVICE=WhyRed
 DEFCONFIG=whyred_defconfig
 CAMERA=OldCam
-OVERCLOCK=NonOC
 VERSION=X5
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 TANGGAL=$(date +"%F-%S")
@@ -75,7 +74,7 @@ function compile() {
 # Zipping
 function zipping() {
     cd AnyKernel || exit 1
-    zip -r9 neXus-${VERSION}_${DEVICE}-${CAMERA}-${OVERCLOCK}-KERNEL-${TANGGAL}.zip *
+    zip -r9 neXus-${VERSION}_${DEVICE}-${CAMERA}-KERNEL-${TANGGAL}.zip *
     cd ..
 }
 sticker
