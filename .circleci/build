@@ -6,7 +6,7 @@ echo "Done"
 DEVICE=WhyRed
 DEFCONFIG=whyred_defconfig
 CAMERA=OldCam
-VERSION=X5
+VERSION=p6
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 TANGGAL=$(date +"%F-%S")
 START=$(date +"%s")
@@ -15,7 +15,7 @@ PATH="${PWD}/clang/bin:$PATH"
 export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 export ARCH=arm64
 export SUBARCH=arm64
-export LOCALVERSION="-${VERSION}"
+export LOCALVERSION="-Mercenary-${VERSION}"
 export KBUILD_BUILD_HOST=circleci
 export KBUILD_BUILD_USER="vishal"
 # sticker plox
