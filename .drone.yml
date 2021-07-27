@@ -1,0 +1,29 @@
+---
+kind: pipeline
+name: Mercenary SDM636 OldCam
+steps:
+  - name: llvm-clang oldcam
+    image: xyzuan/xdocker:latest
+    environment: 
+      token: 
+        from_secret: token
+      chat_id: 
+        from_secret: chat_id
+    commands:
+      - git clone --depth=1 https://github.com/akirasupr/mercenary_kernel_xiaomi_sdm636.git -b ${DRONE_BRANCH} sdm636 && cd sdm636
+      - bash .droneci/build.sh --oldcam
+
+---
+kind: pipeline
+name: Mercenary SDM636 NewCam
+steps:
+  - name: llvm-clang newcam
+    image: xyzuan/xdocker:latest
+    environment: 
+      token: 
+        from_secret: token
+      chat_id: 
+        from_secret: chat_id
+    commands:
+      - git clone --depth=1 https://github.com/akirasupr/mercenary_kernel_xiaomi_sdm636.git -b ${DRONE_BRANCH} sdm636 && cd sdm636
+      - bash .droneci/build.sh --newcam

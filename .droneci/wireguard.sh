@@ -3,7 +3,7 @@
 # Copyright (C) 2020 Shashank Baghel
 # To fetch latest WireGuard and add them into kernel tree as well as to update to latest
 
-KERNEL_DIR="$HOME/whyred" # Configure kernel directory here
+KERNEL_DIR="$HOME/sdm660" # Configure kernel directory here
 USER_AGENT="WireGuard-AndroidROMBuild/0.3 ($(uname -a))"
 WIREGUARD_URL="https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat"
 
