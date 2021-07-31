@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Copyright (C) 2020-2021 akirasupr <vishal.rockstar7011@gmail.com>
-# Kernel Building Script
 set -e
+
 # Clone dependencies
 git clone https://github.com/kdrag0n/proton-clang.git --depth=1 clang
 git clone --depth=1 --single-branch -b whyred https://github.com/akira-vishal/AnyKernel3.git anykernel
+
 # Kernel Variables
 KERNEL_DIR=$(pwd)
 START=$(date +"%s")
@@ -13,6 +13,7 @@ IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 PATH="${PWD}/clang/bin:$PATH"
 CCV=$(${KERNEL_DIR}/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 LDV=$(${KERNEL_DIR}/clang/bin/ld.lld --version | head -n 1)
+
 # Setup Environtment
 export ARCH=arm64
 export SUBARCH=arm64

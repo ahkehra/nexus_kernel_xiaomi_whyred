@@ -1,9 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Copyright (C) 2020 Shashank Baghel
-# To fetch latest WireGuard and add them into kernel tree as well as to update to latest
-
-KERNEL_DIR="$HOME/sdm660" # Configure kernel directory here
+KERNEL_DIR="$HOME/sdm636" # Configure kernel directory here
 USER_AGENT="WireGuard-AndroidROMBuild/0.3 ($(uname -a))"
 WIREGUARD_URL="https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat"
 
@@ -21,15 +18,11 @@ if [ ! -f "wireguard-linux-compat-${VERSION}.tar.xz" ]; then
 fi
 
 if [ ! -d "${KERNEL_DIR}"/net/wireguard ]; then
-
 	mkdir "${KERNEL_DIR}/net/wireguard"
 	tar -C "${KERNEL_DIR}/net/wireguard" -xf wireguard-linux-compat-"${VERSION}".tar.xz --strip-components=2 "wireguard-linux-compat-${VERSION}/src"
-	git add .
-	git commit -S -s -m "net: Import WireGuard v${VERSION} from ${WIREGUARD_URL}"
-	curl https://github.com/theradcolor/android_kernel_xiaomi_whyred/commit/c5ba946f6a2c7ba64989c425db6abf67d83a7797.patch | git am
-
+	git add net/wireguard/*
+	git commit :-s -m "Merge tag 'v${VERSION}' of ${WIREGUARD_URL}"
 elif [ -d "${KERNEL_DIR}"/net/wireguard ]; then
-
 	FILE="${KERNEL_DIR}""/net/wireguard/version.h"
 	CURRENT_VERSION="$(awk 'NR==2' "${FILE}" | sed 's/[^0-9.]*//g' | sed -r 's/^\s*(.*\S)*\s*$/\1/;/^$/d')"
 	if [ "${VERSION}" == "${CURRENT_VERSION}" ]; then
@@ -38,8 +31,8 @@ elif [ -d "${KERNEL_DIR}"/net/wireguard ]; then
 		rm -rf "${KERNEL_DIR}""/net/wireguard"
 		mkdir "${KERNEL_DIR}/net/wireguard"
 		tar -C "${KERNEL_DIR}/net/wireguard" -xf wireguard-linux-compat-"${VERSION}".tar.xz --strip-components=2 "wireguard-linux-compat-${VERSION}/src"
-		git add .
-		git commit -s -m "net: Update WireGuard to v${VERSION} from ${WIREGUARD_URL}"
+		git add net/wireguard/*
+		git commit :-s -m "Merge tag 'v${VERSION}' of ${WIREGUARD_URL}"
 	fi
 
 fi
