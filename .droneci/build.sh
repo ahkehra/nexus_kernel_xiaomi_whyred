@@ -17,7 +17,7 @@ LDV=$(${KERNEL_DIR}/clang/bin/ld.lld --version | head -n 1)
 # Setup Environtment
 export ARCH=arm64
 export SUBARCH=arm64
-export LOCALVERSION="-p7"
+export LOCALVERSION="-p1"
 export KBUILD_BUILD_HOST="droneci"
 export KBUILD_BUILD_USER="akira"
 export KBUILD_COMPILER_STRING="$CCV + $LDV"
