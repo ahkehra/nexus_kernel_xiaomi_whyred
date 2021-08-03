@@ -25,6 +25,13 @@
 #include <asm/cputype.h>
 #include <asm/topology.h>
 
+static DEFINE_PER_CPU(unsigned long, cpu_efficiency) = SCHED_CAPACITY_SCALE;
+
+unsigned long arch_get_cpu_efficiency(int cpu)
+{
+	return per_cpu(cpu_efficiency, cpu);
+}
+
 static DEFINE_PER_CPU(unsigned long, cpu_scale) = SCHED_CAPACITY_SCALE;
 
 unsigned long scale_cpu_capacity(struct sched_domain *sd, int cpu)
@@ -208,6 +215,15 @@ static int __init parse_dt_topology(void)
 		if (cpu_topology[cpu].cluster_id == -1)
 			ret = -EINVAL;
 
+		/* The CPU efficiency value passed from the device tree */
+		cn = of_get_cpu_node(cpu, NULL);
+		if (of_property_read_u32(cn, "efficiency", &efficiency) < 0) {
+			WARN_ON(1);
+			continue;
+		}
+		per_cpu(cpu_efficiency, cpu) = efficiency;
+	}
+
 out_map:
 	of_node_put(map);
 out:
@@ -353,7 +369,6 @@ void store_cpu_topology(unsigned int cpuid)
 
 topology_populated:
 	update_siblings_masks(cpuid);
-	update_cpu_capacity(cpuid);
 }
 
 static void __init reset_cpu_topology(void)
