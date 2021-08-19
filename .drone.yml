@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-name: Mercenary SDM636 OldCam
+name: Nexus WhyRed OldCam
 steps:
   - name: llvm-clang oldcam
     image: archlinux:base-devel
@@ -11,13 +11,12 @@ steps:
         from_secret: chat_id
     commands:
       - curl -LO "https://repo.archlinuxcn.org/x86_64/glibc-linux4-2.33-4-x86_64.pkg.tar.zst" && bsdtar -C / -xvf "glibc-linux4-2.33-4-x86_64.pkg.tar.zst"
-      - pacman -Sy && pacman -S git bc inetutils python2 zip jdk-openjdk --noconfirm
-      - git clone --depth=1 https://github.com/akirasupr/mercenary_kernel_xiaomi_sdm636.git -b ${DRONE_BRANCH} sdm636 && cd sdm636
+      - pacman -Sy && pacman -S git curl bc inetutils python2 zip jdk-openjdk --noconfirm
       - bash .droneci/build.sh --oldcam
 
 ---
 kind: pipeline
-name: Mercenary SDM636 NewCam
+name: Nexus WhyRed NewCam
 steps:
   - name: llvm-clang newcam
     image: archlinux:base-devel
@@ -29,5 +28,4 @@ steps:
     commands:
       - curl -LO "https://repo.archlinuxcn.org/x86_64/glibc-linux4-2.33-4-x86_64.pkg.tar.zst" && bsdtar -C / -xvf "glibc-linux4-2.33-4-x86_64.pkg.tar.zst"
       - pacman -Sy && pacman -S git bc inetutils python2 zip jdk-openjdk --noconfirm
-      - git clone --depth=1 https://github.com/akirasupr/mercenary_kernel_xiaomi_sdm636.git -b ${DRONE_BRANCH} sdm636 && cd sdm636
       - bash .droneci/build.sh --newcam
