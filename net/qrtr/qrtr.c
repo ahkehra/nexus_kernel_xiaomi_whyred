@@ -778,20 +778,9 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
 	if (len == 0 || len & 3)
 		return -EINVAL;
 
-<<<<<<< HEAD
-	skb = alloc_skb_with_frags(sizeof(*v1), len, 0, &errcode, GFP_ATOMIC);
-	if (!skb) {
-		skb = qrtr_get_backup(len);
-		if (!skb) {
-			pr_err("qrtr: Unable to get skb with len:%lu\n", len);
-			return -ENOMEM;
-		}
-	}
-=======
 	skb = __netdev_alloc_skb(NULL, len, GFP_ATOMIC | __GFP_NOWARN);
 	if (!skb)
 		return -ENOMEM;
->>>>>>> 72af4b84330486a61d09ed1e77d4f3ba116f8b7e
 
 	skb_reserve(skb, sizeof(*v1));
 	cb = (struct qrtr_cb *)skb->cb;
@@ -1739,6 +1728,12 @@ static int qrtr_recvmsg(struct socket *sock, struct msghdr *msg,
 	rc = copied;
 
 	if (addr) {
+		/* There is an anonymous 2-byte hole after sq_family,
+		 * make sure to clear it.
+		 */
+		memset(addr, 0, sizeof(*addr));
+
+		cb = (struct qrtr_cb *)skb->cb;
 		addr->sq_family = AF_QIPCRTR;
 		addr->sq_node = cb->src_node;
 		addr->sq_port = cb->src_port;
